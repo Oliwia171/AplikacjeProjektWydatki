@@ -10,19 +10,25 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
+        @include('layouts.theme-script')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+    <body class="font-sans text-gray-900 antialiased dark:text-gray-100">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-16 sm:pt-0 bg-gray-100 transition-colors dark:bg-gray-950">
+            <div class="absolute right-4 top-4">
+                <x-theme-toggle />
+            </div>
+
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <x-application-logo class="w-20 h-20 fill-current text-gray-500 dark:text-gray-300" />
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden transition-colors sm:rounded-lg dark:bg-gray-900 dark:shadow-gray-950">
                 {{ $slot }}
             </div>
         </div>
