@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Tworzymy użytkowników za pomocą Twojego UserFactory
-        $krystian = User::factory()->create(['name' => 'Krystian Oliwka', 'email' => 'krystian@example.com', 'role' => 'admin']);
+        $oliwia = User::factory()->create(['name' => 'Oliwia', 'email' => 'oliwia@example.com', 'role' => 'admin']);
         $adam = User::factory()->create(['name' => 'Adam Nowak', 'email' => 'adam@example.com']);
         $ewa = User::factory()->create(['name' => 'Ewa Kowalska', 'email' => 'ewa@example.com']);
         $haker = User::factory()->create(['name' => 'Jan Hacker', 'email' => 'hacker@example.com']);
@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         // 2. Tworzymy grupę
         $groupId = DB::table('groups')->insertGetId([
             'name' => 'Wycieczka w góry 2026',
-            'owner_id' => $krystian->id,
+            'owner_id' => $oliwia->id,
             'total_amount' => 0.00,
             'created_at' => now(),
             'updated_at' => now(),
@@ -27,15 +27,15 @@ class DatabaseSeeder extends Seeder
 
         // 3. Przypisujemy ludzi do grupy (oprócz Hakera)
         DB::table('group_user')->insert([
-            ['group_id' => $groupId, 'user_id' => $krystian->id, 'created_at' => now(), 'updated_at' => now()],
+            ['group_id' => $groupId, 'user_id' => $oliwia->id, 'created_at' => now(), 'updated_at' => now()],
             ['group_id' => $groupId, 'user_id' => $adam->id, 'created_at' => now(), 'updated_at' => now()],
             ['group_id' => $groupId, 'user_id' => $ewa->id, 'created_at' => now(), 'updated_at' => now()],
         ]);
 
-        // 4. Krystian płaci za rachunek (600 zł)
+        // 4. Oliwia placi za rachunek (600 zl)
         $billId = DB::table('bills')->insertGetId([
             'group_id' => $groupId,
-            'payer_id' => $krystian->id,
+            'payer_id' => $oliwia->id,
             'description' => 'Obiad i napoje',
             'amount' => 600.00,
             'date' => now(),
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
 
         // Symulacja podziału kosztów w bill_splits
         DB::table('bill_splits')->insert([
-            ['bill_id' => $billId, 'user_id' => $krystian->id, 'amount' => 200.00, 'is_paid' => true],
+            ['bill_id' => $billId, 'user_id' => $oliwia->id, 'amount' => 200.00, 'is_paid' => true],
             ['bill_id' => $billId, 'user_id' => $adam->id, 'amount' => 200.00, 'is_paid' => false],
             ['bill_id' => $billId, 'user_id' => $ewa->id, 'amount' => 200.00, 'is_paid' => false],
         ]);
@@ -64,8 +64,8 @@ class DatabaseSeeder extends Seeder
 
             $this->command->info('=== TESTY LOGIKI BAZODANOWEJ (MySQL) ===');
 
-            $balance = DB::select('SELECT get_user_net_balance(?, ?) AS balance', [$krystian->id, $groupId])[0]->balance;
-            $this->command->comment('Saldo Krystiana (funkcja SQL): ' . $balance . ' zl');
+            $balance = DB::select('SELECT get_user_net_balance(?, ?) AS balance', [$oliwia->id, $groupId])[0]->balance;
+            $this->command->comment('Saldo Oliwii (funkcja SQL): ' . $balance . ' zl');
 
             try {
                 DB::table('bill_item_user')->insert([
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->command->info('Konta demo (haslo: password):');
-        $this->command->line('  admin: krystian@example.com');
+        $this->command->line('  admin: oliwia@example.com');
         $this->command->line('  user:  adam@example.com, ewa@example.com');
     }
 }

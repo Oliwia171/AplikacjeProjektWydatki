@@ -70,7 +70,7 @@ npm run dev
 
 ## Szybki test (5 min)
 
-1. Zaloguj: **krystian@example.com** / `password`
+1. Zaloguj: **oliwia@example.com** / `password`
 2. **Moje Grupy** → **Wycieczka w gory 2026**
 3. Sprawdz panel rozliczen i historie rachunkow
 4. Dodaj wydatek, pozycje z paragonu
